@@ -11,5 +11,5 @@ repository = "https://github.com/alekay2200/rust-datastructures.git"
 description = """
 Implementation of some datastructures in rust.
 """
-categories = ["datastructures", "collection"]
+categories = ["data-structures"]
 keywords = ["pointer", "sync", "synchronous"]
