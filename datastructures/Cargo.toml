@@ -13,4 +13,4 @@ description = """
 Implementation of some datastructures in rust.
 """
 categories = ["datastructures", "collection"]
-keywords = ["raw pointer", "pointer", "sync", "synchronous"]
+keywords = ["pointer", "sync", "synchronous"]
