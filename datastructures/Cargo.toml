@@ -1,5 +1,5 @@
 [package]
-name = "datastructures"
+name = "rust-datastructures"
 version = "0.1.0"
 edition = "2021"
 authors = ["Alejandro Palomino <alejandropalomino22@gmail.com>"]
