@@ -8,7 +8,6 @@ rust-version = "1.65.0"
 license = "GPL-3.0 license"
 readme = "README.md"
 repository = "https://github.com/alekay2200/rust-datastructures.git"
-homepage = ""
 description = """
 Implementation of some datastructures in rust.
 """
