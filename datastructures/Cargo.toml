@@ -1,0 +1,16 @@
+[package]
+name = "datastructures"
+version = "0.1.0"
+edition = "2021"
+authors = ["Alejandro Palomino <alejandropalomino22@gmail.com>"]
+rust-version = "1.65.0"
+
+license = "GPL-3.0 license"
+readme = "README.md"
+repository = "https://github.com/alekay2200/rust-datastructures.git"
+homepage = ""
+description = """
+Implementation of some datastructures in rust.
+"""
+categories = ["datastructures", "collection"]
+keywords = ["raw pointer", "pointer", "sync", "synchronous"]

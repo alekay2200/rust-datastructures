@@ -1,2 +1,2 @@
-# rust-datastructures
+# Datascturctures
 Datastructures developed in rust

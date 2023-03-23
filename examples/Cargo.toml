@@ -1,0 +1,15 @@
+[package]
+name = "examples"
+version = "0.0.0"
+edition = "2021"
+publish = false
+authors = ["Alejandro Palomino <alejandropalomino22@gmail.com>"]
+
+[[example]]
+name = "binary_tree"
+path = "binary_tree.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dev-dependencies]
+#tree = { version = "0.1.0" }

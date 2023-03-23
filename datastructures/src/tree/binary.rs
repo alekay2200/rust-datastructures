@@ -4,7 +4,7 @@ use std::ptr;
 type NodeRef<T> = Option<*mut Node<T>>;
 
 #[derive(Debug)]
-pub struct Node<T> where T: PartialEq + PartialOrd {
+struct Node<T> where T: PartialEq + PartialOrd {
     value: T,
     left: NodeRef<T>,
     right: NodeRef<T>,
