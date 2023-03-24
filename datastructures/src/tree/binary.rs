@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 use std::ptr;
-use crate::Datastructure;
+use super::Tree;
 
 type NodeRef<T> = Option<*mut Node<T>>;
 
@@ -132,17 +132,6 @@ impl<T> BinaryTree<T> where T: PartialEq + PartialOrd {
         return smallest;
     }
 
-    pub fn inorder(&self) -> Vec<T> where T: Copy {
-        match &self.root {
-            Some(node) => unsafe { 
-                let mut values: Vec<T> = Vec::new();
-                node.as_ref().unwrap().inorder_rec(&mut values);
-                return values;
-            },
-            None => Vec::new()
-        }
-    }
-
     pub fn exists_rec(&self, value: T) -> bool {
         match self.root {
             Some(node) => unsafe { (*node).exists(value) },
@@ -160,7 +149,7 @@ impl<T> BinaryTree<T> where T: PartialEq + PartialOrd {
     }
 }
 
-impl<T> Datastructure<T> for BinaryTree<T> where T: PartialOrd + PartialEq{
+impl<T> Tree<T> for BinaryTree<T> where T: PartialOrd + PartialEq{
     fn exists(&self, value: T) -> bool {
         let mut found = false;
 
@@ -322,5 +311,16 @@ impl<T> Datastructure<T> for BinaryTree<T> where T: PartialOrd + PartialEq{
         }
 
         self.size += 1;
+    }
+
+    fn inorder(&self) -> Vec<T> where T: Copy {
+        match &self.root {
+            Some(node) => unsafe { 
+                let mut values: Vec<T> = Vec::new();
+                node.as_ref().unwrap().inorder_rec(&mut values);
+                return values;
+            },
+            None => Vec::new()
+        }
     }
 }

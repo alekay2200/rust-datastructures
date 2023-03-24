@@ -1,4 +1,4 @@
-use rust_datastructures::{Datastructure, BinaryTree};
+use rust_datastructures::{Tree, BinaryTree};
 
 fn main() {
     let mut tree = BinaryTree::new();
