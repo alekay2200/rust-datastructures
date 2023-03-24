@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 use std::ptr;
+use crate::Datastructure;
 
 type NodeRef<T> = Option<*mut Node<T>>;
 
@@ -107,6 +108,7 @@ pub struct BinaryTree<T> where T: PartialEq + PartialOrd {
     size: usize
 }
 
+
 impl<T> BinaryTree<T> where T: PartialEq + PartialOrd {
     pub fn new() -> Self {
         BinaryTree { root: None, size: 0 }
@@ -130,40 +132,64 @@ impl<T> BinaryTree<T> where T: PartialEq + PartialOrd {
         return smallest;
     }
 
-    pub fn insert(&mut self, value: T) {
-        if self.root.is_none() { 
-            self.root = Some(Node::new(value)) 
-        } else {
-            let mut current_node = self.root.unwrap();
+    pub fn inorder(&self) -> Vec<T> where T: Copy {
+        match &self.root {
+            Some(node) => unsafe { 
+                let mut values: Vec<T> = Vec::new();
+                node.as_ref().unwrap().inorder_rec(&mut values);
+                return values;
+            },
+            None => Vec::new()
+        }
+    }
 
-            loop {
-                unsafe {
-                    if value < (*current_node).value {
-                        if (*current_node).left.is_none() {
-                            (*current_node).left = Some(Node::new(value));
-                            break;
-                        } else {
-                            current_node = (*current_node).left.unwrap();
-                        }
-                    } else if value > (*current_node).value {
-                        if (*current_node).right.is_none() {
-                            (*current_node).right = Some(Node::new(value));
-                            break;
-                        } else {
-                            current_node = (*current_node).right.unwrap();
-                        }
-                    // Value already in tree, go out to the loop and finish the insertion    
-                    } else { 
-                        break;
-                    }
+    pub fn exists_rec(&self, value: T) -> bool {
+        match self.root {
+            Some(node) => unsafe { (*node).exists(value) },
+            None => false
+        }
+    }
+
+    
+
+    pub fn print_tree_rec(&self) where T: Debug {
+        match self.root {
+            Some(node) =>  unsafe { node.as_ref().unwrap().print_tree_recursive(0) },
+            None => println!("Empty Tree")
+        }
+    }
+}
+
+impl<T> Datastructure<T> for BinaryTree<T> where T: PartialOrd + PartialEq{
+    fn exists(&self, value: T) -> bool {
+        let mut found = false;
+
+        // Empty Tree
+        if self.root.is_none() {
+            return false;
+        }
+
+        let mut aux = self.root;
+
+        while let Some(current) = aux {
+            unsafe {
+                if (*current).value == value {
+                    found = true;
+                    break;
+                } else if value < (*current).value {
+                    aux = (*current).left;
+                } else {
+                    aux = (*current).right;
                 }
             }
         }
 
-        self.size += 1;
+        return found;
     }
 
-    pub fn remove(&mut self, value: T) where T: Debug {
+    // TODO: Decrement the size if the element is removed.
+    // TODO: Refactor this function, too large.
+    fn remove(&mut self, value: T) {
         let mut aux = self.root;
         let mut prev_node: NodeRef<T> = None;
 
@@ -265,29 +291,36 @@ impl<T> BinaryTree<T> where T: PartialEq + PartialOrd {
         }
     }
 
+    fn insert(&mut self, value: T) {
+        if self.root.is_none() { 
+            self.root = Some(Node::new(value)) 
+        } else {
+            let mut current_node = self.root.unwrap();
 
-    pub fn inorder(&self) -> Vec<T> where T: Copy {
-        match &self.root {
-            Some(node) => unsafe { 
-                let mut values: Vec<T> = Vec::new();
-                node.as_ref().unwrap().inorder_rec(&mut values);
-                return values;
-            },
-            None => Vec::new()
+            loop {
+                unsafe {
+                    if value < (*current_node).value {
+                        if (*current_node).left.is_none() {
+                            (*current_node).left = Some(Node::new(value));
+                            break;
+                        } else {
+                            current_node = (*current_node).left.unwrap();
+                        }
+                    } else if value > (*current_node).value {
+                        if (*current_node).right.is_none() {
+                            (*current_node).right = Some(Node::new(value));
+                            break;
+                        } else {
+                            current_node = (*current_node).right.unwrap();
+                        }
+                    // Value already in tree, go out to the loop and finish the insertion    
+                    } else { 
+                        break;
+                    }
+                }
+            }
         }
-    }
 
-    pub fn exists_rec(&self, value: T) -> bool {
-        match self.root {
-            Some(node) => unsafe { (*node).exists(value) },
-            None => false
-        }
-    }
-
-    pub fn print_tree_rec(&self) where T: Debug {
-        match self.root {
-            Some(node) =>  unsafe { node.as_ref().unwrap().print_tree_recursive(0) },
-            None => println!("Empty Tree")
-        }
+        self.size += 1;
     }
 }

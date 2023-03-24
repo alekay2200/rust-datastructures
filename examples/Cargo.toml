@@ -12,4 +12,4 @@ path = "binary_tree.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dev-dependencies]
-#tree = { version = "0.1.0" }
+rust-datastructures = { version = "0.1.1", path = "../datastructures"}
